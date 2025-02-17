@@ -1,0 +1,32 @@
+{% extends "main/base.html" %}
+
+{% block title %}Список рассылок{% endblock %}
+
+{% block content %}
+
+
+<div class="card bg-light mb-3" style="width: 100%;top: 50px">
+  <div class="card-header text-center  text-white border-primary bg-primary mb-3  text-uppercase">Список сообщений</div>
+  <div class="card-body">
+      <table id="subscriberTable" class="table">
+   <thead>
+   {% for header in headers %}
+        <th class="text-primary">{{ header }}</th>
+    {% endfor %}
+   </thead>
+   <tbody>
+       {% for message in messages %}
+        <tr>
+                <td>{{ message.mailing.id }}</td>
+                <td>{{ message.status }}</td>
+                <td>{{ message.read|yesno:"Да,Нет" }}</td>
+                <td>{{ message.subscriber.email }}</td>
+        </tr>
+        {% endfor %}
+   </tbody>
+
+        </table>
+ </div>
+</div>
+
+{% endblock %}

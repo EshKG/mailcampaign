@@ -1,0 +1,16 @@
+   <thead>
+   {% for header in headers %}
+        <th class="text-primary">{{ header }}</th>
+    {% endfor %}
+   </thead>
+   <tbody>
+       {% for subscriber in subscribers %}
+        <tr>
+                <td>{{ subscriber.id }}</td>
+                <td>{{ subscriber.first_name }}</td>
+                <td>{{ subscriber.last_name }}</td>
+                <td>{{ subscriber.birthday }}</td>
+                <td>{{ subscriber.email }}</td>
+        </tr>
+        {% endfor %}
+   </tbody>

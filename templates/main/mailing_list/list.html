@@ -1,0 +1,75 @@
+{% extends "main/base.html" %}
+
+{% block title %}Список рассылок{% endblock %}
+
+{% block content %}
+<!-- Кнопка для открытия модального окна -->
+<button style="position: relative;top: 20px" class="btn btn-primary float-right" data-toggle="modal" data-target="#mailingModal">Создать рассылку</button>
+
+
+<div class="card bg-light mb-3" style="width: 100%;top: 50px">
+  <div class="card-header text-center  text-white border-primary bg-primary mb-3  text-uppercase">Список рассылок</div>
+  <div class="card-body">
+      <table id="mailingTable" class="table">
+   <thead>
+   {% for header in headers %}
+        <th class="text-primary">{{ header }}</th>
+    {% endfor %}
+   </thead>
+   <tbody>
+       {% for mailing in mailings %}
+        <tr>
+                <td>{{ mailing.id }}</td>
+                <td>{{ mailing.name }}</td>
+                <td>{{ mailing.subject }}</td>
+                <td>{{ mailing.template|cut:".html" }}</td>
+                <td>{{ mailing.scheduled_time|default_if_none:"Не указано" }}</td>
+                <td>{{ mailing.status }}</td>
+        </tr>
+        {% endfor %}
+   </tbody>
+
+        </table>
+ </div>
+</div>
+
+<!-- Модальное окно для создания рассылки -->
+<div class="modal" id="mailingModal" tabindex="-1" role="dialog" aria-labelledby="mailingModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title" id="mailingModalLabel"></h4>
+            </div>
+            <div class="modal-body">
+                <form id="mailingForm">
+                    <div class="form-group">
+                        <label for="name">Название рассылки</label>
+                        <input type="text" name="name" id="name" class="form-control" placeholder="">
+                    </div>
+                    <div class="form-group">
+                        <label for="subject">Тема писем</label>
+                        <input type="text" name="subject" id="subject" class="form-control" placeholder="">
+                    </div>
+                    <div class="form-group">
+                        <label for="template">Выбрать шаблон</label>
+                        <select name="template" id="template" class="form-control">
+                            {% for template in templates %}
+                                <option value="{{ template }}">{{ template|cut:".html" }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="scheduled_time">Время отправки (если отложено)</label>
+                        <input type="datetime-local" name="scheduled_time" id="scheduled_time" class="form-control">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Отправить</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

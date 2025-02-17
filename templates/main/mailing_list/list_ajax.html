@@ -1,0 +1,17 @@
+   <thead>
+   {% for header in headers %}
+        <th class="text-primary">{{ header }}</th>
+    {% endfor %}
+   </thead>
+   <tbody>
+       {% for mailing in mailings %}
+        <tr>
+                <td>{{ mailing.id }}</td>
+                <td>{{ mailing.name }}</td>
+                <td>{{ mailing.subject }}</td>
+                <td>{{ mailing.template|cut:".html" }}</td>
+                <td>{{ mailing.scheduled_time|default_if_none:"Не указано" }}</td>
+                <td>{{ mailing.status }}</td>
+        </tr>
+        {% endfor %}
+   </tbody>
